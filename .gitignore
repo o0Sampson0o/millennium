@@ -1,0 +1,31 @@
+# Ignore build directories
+/build/
+/bin/
+/lib/
+/CMakeFiles/
+/CMakeCache.txt
+/cmake_install.cmake
+/Makefile
+
+# Ignore user-specific files
+*.user
+*.swp
+*.swo
+*.swn
+
+# Ignore generated files
+*.o
+*.obj
+*.so
+*.dll
+*.exe
+*.out
+*.a
+*.lib
+*.pdb
+*.log
+
+# Ignore IDE specific files
+.idea/
+.vscode/
+*.code-workspace
