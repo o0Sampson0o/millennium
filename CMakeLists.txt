@@ -18,7 +18,7 @@ include_directories(${SFML_INCLUDE_DIR})
 link_directories(${SFML_LIBRARY_DIR})
 
 # Add the executable
-add_executable(millennium src/main.cpp src/Engine.cpp)
+add_executable(millennium src/main.cpp src/Engine.cpp src/Particle.cpp src/Logger.cpp)
 
 # Link SFML libraries with full paths
 target_link_libraries(millennium PRIVATE
