@@ -1,25 +1,23 @@
 cmake_minimum_required(VERSION 3.10)
 project(millennium)
 
-# Specify the platform for the generator
-set(CMAKE_GENERATOR_PLATFORM Win32)
-
 # Set the C++ standard to C++17
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_BUILD_TYPE Debug)
 
-# Enable static linking for SFML
-set(SFML_STATIC TRUE)
+# Use MinGW toolchain (if applicable)
+if(MSYS)
+set(CMAKE_CXX_COMPILER "x86_64-w64-mingw32-g++")
+set(CMAKE_C_COMPILER "x86_64-w64-mingw32-gcc")
+set(CMAKE_CXX_FLAGS_DEBUG "-g -O0")
+set(CMAKE_CXX_FLAGS_RELEASE "-O3")
+endif()
 
-# Manually specify SFML include and library directories
-set(SFML_INCLUDE_DIR "C:/SFML-2.5.1/include")
-set(SFML_LIBRARY_DIR "C:/SFML-2.5.1/lib")
+# Find SFML package
+find_package(SFML 2.6 REQUIRED graphics window system)
 
 # Include directories for the project and SFML
 include_directories(${PROJECT_SOURCE_DIR}/src/include)
-include_directories(${SFML_INCLUDE_DIR})
-
-# Link directories for SFML libraries
-link_directories(${SFML_LIBRARY_DIR})
 
 # Add the executable and specify source files
 add_executable(millennium
@@ -27,11 +25,14 @@ add_executable(millennium
     src/Engine.cpp
     src/Particle.cpp
     src/Logger.cpp
+    src/QuadTree.cpp
 )
 
-# Link SFML libraries with full paths
-target_link_libraries(millennium PRIVATE
-    "C:/SFML-2.5.1/lib/sfml-graphics.lib"
-    "C:/SFML-2.5.1/lib/sfml-window.lib"
-    "C:/SFML-2.5.1/lib/sfml-system.lib"
-)
+# Link SFML libraries
+target_link_libraries(millennium sfml-graphics sfml-window sfml-system)
+
+# Include SFML headers
+target_include_directories(millennium PRIVATE ${SFML_INCLUDE_DIR})
+
+# Optional: Set library search directories if SFML isn't found automatically
+# link_directories(${SFML_LIBRARY_DIR})

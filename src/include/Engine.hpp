@@ -1,5 +1,8 @@
+#pragma once
+
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <QuadTree.hpp>
 // forward declaration
 class Particle;
 
@@ -11,9 +14,13 @@ public:
     void run();
 
 private:
-    void update();
+    void update(sf::Time elapsed);
     void render();
+    void calculateForces();
 
-    std::vector<Particle *> particles;
+    // MemoryPool<QuadTree> quadTreePool;
     sf::RenderWindow window;
+    sf::View camera;
+    std::vector<Particle *> particles;
+    QuadTree quadTree;
 };

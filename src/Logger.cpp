@@ -13,24 +13,24 @@
 #define YELLOW "\033[33m"
 #define BLUE "\033[34m"
 
-void Logger::info(const char *message)
+void Logger::info(const std::string &message)
 {
-    std::cout << BLUE << "INFO: " << message << RESET << std::endl;
+    std::cout << BLUE << "INFO: " << message.c_str() << RESET << std::endl;
 }
 
-void Logger::error(const char *message)
+void Logger::error(const std::string &message)
 {
-    std::cerr << RED << "ERROR: " << message << RESET << std::endl;
+    std::cerr << RED << "ERROR: " << message.c_str() << RESET << std::endl;
 }
 
-void Logger::warn(const char *message)
+void Logger::warn(const std::string &message)
 {
-    std::cout << YELLOW << "WARNING: " << message << RESET << std::endl;
+    std::cout << YELLOW << "WARNING: " << message.c_str() << RESET << std::endl;
 }
 
-void Logger::debug(const char *message)
+void Logger::debug(const std::string &message)
 {
 #ifdef DEBUG
-    std::cout << GREEN << "DEBUG: " << message << RESET << std::endl;
+    std::cout << GREEN << "DEBUG: " << message.c_str() << RESET << std::endl;
 #endif
 }

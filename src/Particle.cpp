@@ -1,6 +1,7 @@
 #include <Particle.hpp>
 #include <settings.hpp>
 #include <Logger.hpp>
+#include <cmath>
 
 int Particle::count = 0;
 
@@ -34,22 +35,24 @@ void Particle::update(float dt)
 
     acceleration = sf::Vector2f(0.f, 0.f);
 
-    if (position.x < 0 || position.x > WINDOW_WIDTH)
-    {
-        Logger::debug("Particle hit the wall");
-        velocity.x = -velocity.x;
-        position.x = std::max(0.f, std::min(position.x, static_cast<float>(WINDOW_WIDTH)));
-    }
-
-    if (position.y < 0 || position.y > WINDOW_HEIGHT)
-    {
-        Logger::debug("Particle hit the wall");
-        velocity.y = -velocity.y;
-        position.y = std::max(0.f, std::min(position.y, static_cast<float>(WINDOW_HEIGHT)));
-    }
+    handleWallCollision();
 }
 
 void Particle::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
     target.draw(shape, states);
+}
+
+// periodic boundary conditions
+void Particle::handleWallCollision()
+{
+    if (position.x < 0)
+        position.x += UNIVERSE_SIZE;
+    else if (position.x > UNIVERSE_SIZE)
+        position.x -= UNIVERSE_SIZE;
+
+    if (position.y < 0)
+        position.y += UNIVERSE_SIZE;
+    else if (position.y > UNIVERSE_SIZE)
+        position.y -= UNIVERSE_SIZE;
 }
